@@ -1,4 +1,4 @@
-package com.gurukul.ExceptionHandler;
+package com.irms_service.ExceptionHandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

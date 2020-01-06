@@ -1,4 +1,4 @@
-package com.gurukul.service;
+package com.irms_service.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gurukul.DAO.StudentDAO;
-import com.gurukul.model.Student;
+import com.irms_service.dao.StudentDAO;
+import com.irms_service.model.Student;
 
 @Service
 public class StudentService {

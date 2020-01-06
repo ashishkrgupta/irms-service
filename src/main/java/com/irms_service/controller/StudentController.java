@@ -1,4 +1,4 @@
-package com.gurukul;
+package com.irms_service.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gurukul.model.Student;
-import com.gurukul.service.StudentService;
+import com.irms_service.model.Student;
+import com.irms_service.service.StudentService;
 
 @RestController
 @RequestMapping("gurukulSchool")

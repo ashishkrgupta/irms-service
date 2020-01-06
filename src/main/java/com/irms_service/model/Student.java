@@ -1,4 +1,4 @@
-package com.gurukul.model;
+package com.irms_service.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
