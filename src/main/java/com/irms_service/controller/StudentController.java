@@ -17,33 +17,33 @@ import com.irms_service.model.Student;
 import com.irms_service.service.StudentService;
 
 @RestController
-@RequestMapping("gurukulSchool")
+@RequestMapping("students")
 public class StudentController {
 
 	@Autowired
 	StudentService service;
 	
-	@GetMapping(value="getStudentById/{id}")
+	@GetMapping(value="/{id}")
 	public Optional<Student> getStudentById(@PathVariable("id") int id){
 		return service.getStudentById(id);
 	}
 	
-	@PostMapping(value="newAdmission")
+	@PostMapping(value="")
 	public void newAdmission(@RequestBody Student student) {
 		service.newAddmission(student);
 	}
 	
-	@PatchMapping(value="updateAddress")
-	public void updateAddress(@RequestBody Student student) {
-		service.updateStudentAddress(student);
-	}
+//	@PatchMapping(value="updateAddress")
+//	public void updateAddress(@RequestBody Student student) {
+//		service.updateStudentAddress(student);
+//	}
 	
-	@DeleteMapping("removeStudent/{id}")
+	@DeleteMapping("/{id}")
 	public void removeStudent(@PathVariable("id") int id) {
 		service.deleteStudent(id);
 	}
 	
-	@GetMapping(value ="getAllStudentInfo")
+	@GetMapping(value ="")
 	public List<Student> getAllStudentInfo(){
 		return service.getAllStudentInfo();
 	}
