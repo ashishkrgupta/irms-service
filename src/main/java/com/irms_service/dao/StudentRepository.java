@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.irms_service.model.Student;
 
 @Repository
-public interface StudentDAO extends JpaRepository<Student, Integer>{
+public interface StudentRepository extends JpaRepository<Student, Integer>{
 
 	
 }

@@ -28,8 +28,9 @@ public class StudentController {
 	}
 	
 	@PostMapping(value="")
-	public void newAdmission(@RequestBody Student student) {
+	public Student newAdmission(@RequestBody Student student) {
 		service.newAddmission(student);
+		return student;
 	}
 	
 //	@PatchMapping(value="updateAddress")
