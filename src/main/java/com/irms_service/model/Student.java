@@ -2,81 +2,36 @@ package com.irms_service.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.irms_service.entity.AddressEntity;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Currency;
-import org.springframework.format.annotation.DateTimeFormat;
-
-@Entity
-@Table(name="Student")
 public class Student {
-	
-	@Id
-    @GeneratedValue
-	private long id;
-	
-	@Column(name = "enrolment_id")
 	private String enrollmentId;
-	
-	@Column(name = "first_name")
+
 	private String firstName;
 	
-	@Column(name = "middle_name")
 	private String middleName;
-	
-	@Column(name = "last_name")
+
 	private String lastName;
-	
-	@Column(name = "blood_group")
+
 	private String bloodGroup;
-	
-	@Column(name="gender", nullable = false, length = 1)
+
 	private String gender;
-	
-	@Column(name="dob")
+
 	private LocalDateTime dateOfBirth;
-	
-	@Column
+
 	private String nationality;
-	
-	@Column
+
 	private String religion;
-	
-	@Column
+
 	private String community;
-	
-	@Column(name="aadhar_number", length= 12)
+
 	private String aadharNumber;
-	
-	@Column(name= "language_known")
+
 	private String languageKnown;
-	
-	@Column(name="admission_date")
-	@CreationTimestamp
-	private LocalDateTime addmissionDate;
-	
-	@Column(name="leaving_date")
-	private LocalDateTime leavingDate;
-	
-	@Column(name="addmission_standard")
+
 	private String addmissionStandard;
-	
-	@Column(name="email_id")
+
 	private String emailId;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getEnrollmentId() {
 		return enrollmentId;
@@ -174,22 +129,6 @@ public class Student {
 		this.languageKnown = languageKnown;
 	}
 
-	public LocalDateTime getAddmissionDate() {
-		return addmissionDate;
-	}
-
-	public void setAddmissionDate(LocalDateTime addmissionDate) {
-		this.addmissionDate = addmissionDate;
-	}
-
-	public LocalDateTime getLeavingDate() {
-		return leavingDate;
-	}
-
-	public void setLeavingDate(LocalDateTime leavingDate) {
-		this.leavingDate = leavingDate;
-	}
-
 	public String getAddmissionStandard() {
 		return addmissionStandard;
 	}
@@ -206,24 +145,4 @@ public class Student {
 		this.emailId = emailId;
 	}
 
-	@Override
-	public String toString() {
-		return "Student [id=" + id + ", enrollmentId=" + enrollmentId + ", firstName=" + firstName + ", middleName="
-				+ middleName + ", lastName=" + lastName + ", bloodGroup=" + bloodGroup + ", gender=" + gender
-				+ ", dateOfBirth=" + dateOfBirth + ", nationality=" + nationality + ", religion=" + religion
-				+ ", community=" + community + ", aadharNumber=" + aadharNumber + ", languageKnown=" + languageKnown
-				+ ", addmissionDate=" + addmissionDate + ", leavingDate=" + leavingDate + ", addmissionStandard="
-				+ addmissionStandard + ", emailId=" + emailId + "]";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

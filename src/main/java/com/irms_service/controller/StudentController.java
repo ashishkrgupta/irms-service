@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.irms_service.model.Student;
+import com.irms_service.entity.StudentEntity;
+import com.irms_service.model.GenericRequestBody;
 import com.irms_service.service.StudentService;
 
 @RestController
@@ -23,15 +24,21 @@ public class StudentController {
 	StudentService service;
 	
 	@GetMapping(value="/{id}")
-	public Optional<Student> getStudentById(@PathVariable("id") int id){
+	public Optional<StudentEntity> getStudentById(@PathVariable("id") int id){
 		return service.getStudentById(id);
 	}
 	
 	@PostMapping(value="")
-	public Student newAdmission(@RequestBody Student student) {
+	public StudentEntity newAdmission(@RequestBody StudentEntity student) {
 		service.newAddmission(student);
 		return student;
 	}
+
+	@PostMapping(value="/updated")
+	public void newAdmission(@RequestBody GenericRequestBody request) {
+		service.newAddmissionRequst(request);
+	}
+
 	
 //	@PatchMapping(value="updateAddress")
 //	public void updateAddress(@RequestBody Student student) {
@@ -44,7 +51,8 @@ public class StudentController {
 	}
 	
 	@GetMapping(value ="")
-	public List<Student> getAllStudentInfo(){
+	public List<StudentEntity> getAllStudentInfo(){
 		return service.getAllStudentInfo();
 	}
+	
 }
