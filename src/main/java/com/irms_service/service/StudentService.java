@@ -11,55 +11,85 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.irms_service.entity.AddressEntity;
+import com.irms_service.entity.DocumentEntity;
+import com.irms_service.entity.EmergencyContactEntity;
+import com.irms_service.entity.PersonEntity;
 import com.irms_service.entity.StudentEntity;
-import com.irms_service.model.GenericRequestBody;
 import com.irms_service.repository.AddressRepository;
+import com.irms_service.repository.DocumentRepository;
+import com.irms_service.repository.EmergencyContactRepository;
+import com.irms_service.repository.PersonRepository;
 import com.irms_service.repository.StudentRepository;
 
 @Service
 @Transactional
 public class StudentService {
-	
+
 	@Autowired
 	StudentRepository studentRepository;
 
 	@Autowired
 	AddressRepository addressRepository;
-	
-	public Optional<StudentEntity> getStudentById(int id) {
+
+	@Autowired
+	PersonRepository personRepository;
+
+	@Autowired
+	EmergencyContactRepository ecRepository;
+
+	@Autowired
+	DocumentRepository docRepository;
+
+	public Optional<StudentEntity> getStudentById(long id) {
 		return studentRepository.findById(id);
 	}
-	
-	public void newAddmission(StudentEntity student ) {
-		student.setEnrollmentId("20200101");
+
+	public Optional<StudentEntity> newAddmission(StudentEntity student) {
+		student.setEnrollmentId(null);
 		student.setLeavingDate(null);
 		studentRepository.save(student);
+		List<PersonEntity> persons = student.getRelatives();
+		List<EmergencyContactEntity> ecList = student.getEmergencyContacts();
+		List<DocumentEntity> documents = student.getDocuments();
+		List<AddressEntity> addressList = student.getAddressList();
+		student.setEnrollmentId("201001_"+student.getId());
+		persons.forEach(person ->{
+			personRepository.save(person);
+			person.setStudent(student);
+		});
+		
+		ecList.forEach(ec ->{
+			ecRepository.save(ec);
+			ec.setStudent(student);
+		});
+		
+		documents.forEach(document ->{
+			docRepository.save(document);
+			document.setStudent(student);
+		});
+		
+		addressList.forEach(address ->{
+			addressRepository.save(address);
+			address.setStudent(student);
+		});
+		
+		return studentRepository.findById(student.getId());
 	}
-	
+
 	public void updateStudentAddress(StudentEntity student) {
 		studentRepository.save(student);
 	}
-	
+
 	public List<StudentEntity> getAllStudentInfo() {
 		return studentRepository.findAll();
 	}
-	
-	public void deleteStudent(int id) {
+
+	public void deleteStudent(long id) {
 		StudentEntity student = studentRepository.findById(id).orElseGet(null);
-		if(Objects.isNull(student))
+		if (Objects.isNull(student))
 			return;
 		student.setLeavingDate(LocalDateTime.now());
 		studentRepository.save(student);
 	}
 
-	public void newAddmissionRequst(GenericRequestBody request) {
-		
-		StudentEntity student = new StudentEntity(request.getStudent());
-		studentRepository.save(student);
-		AddressEntity address = new AddressEntity(request.getAddress());
-		addressRepository.save(address);
-		student.setAddress(address);
-		address.setStudent(student);
-		
-	}
 }

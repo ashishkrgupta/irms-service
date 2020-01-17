@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.irms_service.entity.StudentEntity;
-import com.irms_service.model.GenericRequestBody;
 import com.irms_service.service.StudentService;
 
 @RestController
@@ -22,37 +21,30 @@ public class StudentController {
 
 	@Autowired
 	StudentService service;
-	
-	@GetMapping(value="/{id}")
-	public Optional<StudentEntity> getStudentById(@PathVariable("id") int id){
+
+	@GetMapping(value = "/{id}")
+	public Optional<StudentEntity> getStudentById(@PathVariable("id") long id) {
 		return service.getStudentById(id);
 	}
-	
-	@PostMapping(value="")
-	public StudentEntity newAdmission(@RequestBody StudentEntity student) {
-		service.newAddmission(student);
-		return student;
+
+	@PostMapping(value = "")
+	public Optional<StudentEntity> newAdmission(@RequestBody StudentEntity student) {
+		return service.newAddmission(student);
 	}
 
-	@PostMapping(value="/updated")
-	public void newAdmission(@RequestBody GenericRequestBody request) {
-		service.newAddmissionRequst(request);
-	}
-
-	
 //	@PatchMapping(value="updateAddress")
 //	public void updateAddress(@RequestBody Student student) {
 //		service.updateStudentAddress(student);
 //	}
-	
+
 	@DeleteMapping("/{id}")
-	public void removeStudent(@PathVariable("id") int id) {
+	public void removeStudent(@PathVariable("id") long id) {
 		service.deleteStudent(id);
 	}
-	
-	@GetMapping(value ="")
-	public List<StudentEntity> getAllStudentInfo(){
+
+	@GetMapping(value = "")
+	public List<StudentEntity> getAllStudentInfo() {
 		return service.getAllStudentInfo();
 	}
-	
+
 }

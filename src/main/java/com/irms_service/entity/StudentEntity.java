@@ -1,99 +1,88 @@
 package com.irms_service.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.irms_service.model.Student;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="Student")
+@Table(name = "Student")
 public class StudentEntity {
-	
-	public StudentEntity() {}
-	
-	public StudentEntity(Student student) {
-		super();
-		this.enrollmentId = student.getEnrollmentId();
-		this.firstName = student.getFirstName();
-		this.middleName = student.getMiddleName();
-		this.lastName = student.getLastName();
-		this.bloodGroup = student.getBloodGroup();
-		this.gender = student.getGender();
-		this.dateOfBirth = student.getDateOfBirth();
-		this.nationality = student.getNationality();
-		this.religion = student.getReligion();
-		this.community = student.getCommunity();
-		this.aadharNumber = student.getAadharNumber();
-		this.languageKnown = student.getLanguageKnown();
-		//this.addmissionDate = student.getAddmissionDate();
-		this.leavingDate = null;
-		this.addmissionStandard = student.getAddmissionStandard();
-		this.emailId = student.getEmailId();
-	}
 
 	@Id
-    @GeneratedValue
+	@GeneratedValue
+	@JsonIgnore
 	private long id;
-	
-	@Column(name = "enrolment_id")
+
+	@Column
 	private String enrollmentId;
-	
-	@Column(name = "first_name")
+
+	@Column
 	private String firstName;
-	
-	@Column(name = "middle_name")
+
+	@Column
 	private String middleName;
-	
-	@Column(name = "last_name")
+
+	@Column
 	private String lastName;
-	
-	@Column(name = "blood_group")
+
+	@Column
 	private String bloodGroup;
-	
-	@Column(name="gender", nullable = false, length = 1)
+
+	@Column
 	private String gender;
-	
-	@Column(name="dob")
+
+	@Column
 	private LocalDateTime dateOfBirth;
-	
+
 	@Column
 	private String nationality;
-	
+
 	@Column
 	private String religion;
-	
+
 	@Column
 	private String community;
-	
-	@Column(name="aadhar_number", length= 12)
+
+	@Column
 	private String aadharNumber;
-	
-	@Column(name= "language_known")
+
+	@Column
 	private String languageKnown;
-	
-	@Column(name="admission_date")
+
+	@Column
+	private String addmissionStandard;
+
+	@Column
+	private String emailId;
+
+	@Column(name = "admission_date")
 	@CreationTimestamp
 	private LocalDateTime addmissionDate;
-	
-	@Column(name="leaving_date")
+
+	@Column(name = "leaving_date")
 	private LocalDateTime leavingDate;
-	
-	@Column(name="addmission_standard")
-	private String addmissionStandard;
-	
-	@Column(name="email_id")
-	private String emailId;
-	
-	@OneToOne(mappedBy = "student")
-	private AddressEntity address;
+
+	@OneToMany(mappedBy = "student")
+	private List<AddressEntity> addressList;
+
+	@OneToMany(mappedBy = "student")
+	private List<PersonEntity> relatives;
+
+	@OneToMany(mappedBy = "student")
+	private List<DocumentEntity> documents;
+
+	@OneToMany(mappedBy = "student")
+	private List<EmergencyContactEntity> emergencyContacts;
 
 	public long getId() {
 		return id;
@@ -199,22 +188,6 @@ public class StudentEntity {
 		this.languageKnown = languageKnown;
 	}
 
-	public LocalDateTime getAddmissionDate() {
-		return addmissionDate;
-	}
-
-	public void setAddmissionDate(LocalDateTime addmissionDate) {
-		this.addmissionDate = addmissionDate;
-	}
-
-	public LocalDateTime getLeavingDate() {
-		return leavingDate;
-	}
-
-	public void setLeavingDate(LocalDateTime leavingDate) {
-		this.leavingDate = leavingDate;
-	}
-
 	public String getAddmissionStandard() {
 		return addmissionStandard;
 	}
@@ -231,33 +204,65 @@ public class StudentEntity {
 		this.emailId = emailId;
 	}
 
-	
-	public AddressEntity getAddress() {
-		return address;
+	public LocalDateTime getAddmissionDate() {
+		return addmissionDate;
 	}
 
-	public void setAddress(AddressEntity address) {
-		this.address = address;
+	public void setAddmissionDate(LocalDateTime addmissionDate) {
+		this.addmissionDate = addmissionDate;
+	}
+
+	public LocalDateTime getLeavingDate() {
+		return leavingDate;
+	}
+
+	public void setLeavingDate(LocalDateTime leavingDate) {
+		this.leavingDate = leavingDate;
+	}
+
+	public List<AddressEntity> getAddressList() {
+		return addressList;
+	}
+
+	public void setAddressList(List<AddressEntity> addressList) {
+		this.addressList = addressList;
+	}
+
+	public List<PersonEntity> getRelatives() {
+		return relatives;
+	}
+
+	public void setRelatives(List<PersonEntity> relatives) {
+		this.relatives = relatives;
+	}
+
+	public List<DocumentEntity> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<DocumentEntity> documents) {
+		this.documents = documents;
+	}
+
+	public List<EmergencyContactEntity> getEmergencyContacts() {
+		return emergencyContacts;
+	}
+
+	public void setEmergencyContacts(List<EmergencyContactEntity> emergencyContacts) {
+		this.emergencyContacts = emergencyContacts;
 	}
 
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", enrollmentId=" + enrollmentId + ", firstName=" + firstName + ", middleName="
-				+ middleName + ", lastName=" + lastName + ", bloodGroup=" + bloodGroup + ", gender=" + gender
-				+ ", dateOfBirth=" + dateOfBirth + ", nationality=" + nationality + ", religion=" + religion
+		return "StudentEntity [id=" + id + ", enrollmentId=" + enrollmentId + ", firstName=" + firstName
+				+ ", middleName=" + middleName + ", lastName=" + lastName + ", bloodGroup=" + bloodGroup + ", gender="
+				+ gender + ", dateOfBirth=" + dateOfBirth + ", nationality=" + nationality + ", religion=" + religion
 				+ ", community=" + community + ", aadharNumber=" + aadharNumber + ", languageKnown=" + languageKnown
-				+ ", addmissionDate=" + addmissionDate + ", leavingDate=" + leavingDate + ", addmissionStandard="
-				+ addmissionStandard + ", emailId=" + emailId + ", address=" + address + "]";
+				+ ", addmissionStandard=" + addmissionStandard + ", emailId=" + emailId + ", addmissionDate="
+				+ addmissionDate + ", leavingDate=" + leavingDate + ", addressList=" + addressList + ", relatives="
+				+ relatives + ", documents=" + documents + ", emergencyContacts=" + emergencyContacts + "]";
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
