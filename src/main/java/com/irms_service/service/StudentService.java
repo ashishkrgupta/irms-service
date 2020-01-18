@@ -92,4 +92,15 @@ public class StudentService {
 		studentRepository.save(student);
 	}
 
+	public List<StudentEntity> getStudentByLastName(String lastName) {
+		return studentRepository.findByLastName(lastName);
+	}
+	
+	public List<StudentEntity> getStudentByFirstName(String firstName) {
+		return studentRepository.findByFirstName(firstName);
+	}
+	
+	public List<StudentEntity> getStudentByMiddleName(String middleName) {
+		return studentRepository.findByMiddleName(middleName);
+	}
 }

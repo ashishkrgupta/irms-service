@@ -32,11 +32,6 @@ public class StudentController {
 		return service.newAddmission(student);
 	}
 
-//	@PatchMapping(value="updateAddress")
-//	public void updateAddress(@RequestBody Student student) {
-//		service.updateStudentAddress(student);
-//	}
-
 	@DeleteMapping("/{id}")
 	public void removeStudent(@PathVariable("id") long id) {
 		service.deleteStudent(id);
@@ -45,6 +40,21 @@ public class StudentController {
 	@GetMapping(value = "")
 	public List<StudentEntity> getAllStudentInfo() {
 		return service.getAllStudentInfo();
+	}
+
+	@GetMapping(value = "/firstName/{firstName}")
+	public List<StudentEntity> getStudentByFirstName(@PathVariable("firstName") String firstName) {
+		return service.getStudentByFirstName(firstName);
+	}
+
+	@GetMapping(value = "/middleName/{middleName}")
+	public List<StudentEntity> getStudentByMiddleName(@PathVariable("middleName") String middleName) {
+		return service.getStudentByMiddleName(middleName);
+	}
+
+	@GetMapping(value = "/lastName/{lastName}")
+	public List<StudentEntity> getStudentByLastName(@PathVariable("lastName") String lastName) {
+		return service.getStudentByLastName(lastName);
 	}
 
 }
