@@ -57,4 +57,10 @@ public class StudentController {
 		return service.getStudentByLastName(lastName);
 	}
 
+	@GetMapping(value = "/standard/{standard}")
+	public List<StudentEntity> getStudentsByAdmissionStandard(@PathVariable("standard") String standard) {
+		return service.getStudentsByAdmissionStandard(standard);
+	}
+	
+	
 }

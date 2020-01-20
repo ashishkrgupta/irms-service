@@ -81,7 +81,8 @@ public class StudentService {
 	}
 
 	public List<StudentEntity> getAllStudentInfo() {
-		return studentRepository.findAll();
+		//return studentRepository.findAll();
+		return studentRepository.findAllActiveStudent();
 	}
 
 	public void deleteStudent(long id) {
@@ -102,5 +103,9 @@ public class StudentService {
 	
 	public List<StudentEntity> getStudentByMiddleName(String middleName) {
 		return studentRepository.findByMiddleName(middleName);
+	}
+	
+	public List<StudentEntity> getStudentsByAdmissionStandard(String admissionStandard) {
+		return studentRepository.findByAddmissionStandard(admissionStandard);
 	}
 }
