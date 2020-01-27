@@ -1,6 +1,7 @@
 package com.irms_service.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +19,7 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long>{
 	
 	@Query(value = "select * from student where leaving_date is null", nativeQuery = true)
 	public List<StudentEntity> findAllActiveStudent();
+	public Optional<StudentEntity> findByEnrollmentId(long id);
 		
 	
 }

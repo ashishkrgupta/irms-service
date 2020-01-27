@@ -20,7 +20,6 @@ public class StudentEntity {
 
 	@Id
 	@GeneratedValue
-	@JsonIgnore
 	private long id;
 
 	@Column

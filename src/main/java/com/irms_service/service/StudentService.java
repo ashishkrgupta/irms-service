@@ -43,6 +43,11 @@ public class StudentService {
 	public Optional<StudentEntity> getStudentById(long id) {
 		return studentRepository.findById(id);
 	}
+	
+	public Optional<StudentEntity> getStudentByEnrollmentId(long id) {
+		return studentRepository.findByEnrollmentId(id);
+	}
+
 
 	public Optional<StudentEntity> newAddmission(StudentEntity student) {
 		student.setEnrollmentId(null);
