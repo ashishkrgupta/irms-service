@@ -25,7 +25,7 @@ public class StudentController {
 	@GetMapping(value = "/{id}")
 	public Optional<StudentEntity> getStudentById(@PathVariable("id") long id) {
 		//return service.getStudentById(id);
-		return service.getStudentByEnrollmentId(id);
+		return service.getStudentById(id);
 	}
 
 	@PostMapping(value = "")
