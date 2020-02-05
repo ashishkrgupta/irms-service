@@ -1,6 +1,6 @@
 package com.irms_service.service;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -43,11 +43,10 @@ public class StudentService {
 	public Optional<StudentEntity> getStudentById(long id) {
 		return studentRepository.findById(id);
 	}
-	
+
 	public Optional<StudentEntity> getStudentByEnrollmentId(long id) {
 		return studentRepository.findByEnrollmentId(id);
 	}
-
 
 	public Optional<StudentEntity> newAddmission(StudentEntity student) {
 		student.setEnrollmentId(null);
@@ -57,27 +56,19 @@ public class StudentService {
 		List<EmergencyContactEntity> ecList = student.getEmergencyContacts();
 		List<DocumentEntity> documents = student.getDocuments();
 		List<AddressEntity> addressList = student.getAddressList();
-		student.setEnrollmentId("201001_"+student.getId());
-		persons.forEach(person ->{
-			personRepository.save(person);
-			person.setStudent(student);
-		});
-		
-		ecList.forEach(ec ->{
-			ecRepository.save(ec);
-			ec.setStudent(student);
-		});
-		
-		documents.forEach(document ->{
-			docRepository.save(document);
-			document.setStudent(student);
-		});
-		
-		addressList.forEach(address ->{
-			addressRepository.save(address);
-			address.setStudent(student);
-		});
-		
+		student.setEnrollmentId("201001_" + student.getId());
+		if (persons != null) {
+			personRepository.saveAll(persons);
+		}
+		if (ecList != null) {
+			ecRepository.saveAll(ecList);
+		}
+		if (documents != null) {
+			docRepository.saveAll(documents);
+		}
+		if (addressList != null) {
+			addressRepository.saveAll(addressList);
+		}
 		return studentRepository.findById(student.getId());
 	}
 
@@ -86,7 +77,7 @@ public class StudentService {
 	}
 
 	public List<StudentEntity> getAllStudentInfo() {
-		//return studentRepository.findAll();
+		// return studentRepository.findAll();
 		return studentRepository.findAllActiveStudent();
 	}
 
@@ -94,22 +85,22 @@ public class StudentService {
 		StudentEntity student = studentRepository.findById(id).orElseGet(null);
 		if (Objects.isNull(student))
 			return;
-		student.setLeavingDate(LocalDateTime.now());
+		student.setLeavingDate(new Date());
 		studentRepository.save(student);
 	}
 
 	public List<StudentEntity> getStudentByLastName(String lastName) {
 		return studentRepository.findByLastName(lastName);
 	}
-	
+
 	public List<StudentEntity> getStudentByFirstName(String firstName) {
 		return studentRepository.findByFirstName(firstName);
 	}
-	
+
 	public List<StudentEntity> getStudentByMiddleName(String middleName) {
 		return studentRepository.findByMiddleName(middleName);
 	}
-	
+
 	public List<StudentEntity> getStudentsByAdmissionStandard(String admissionStandard) {
 		return studentRepository.findByAddmissionStandard(admissionStandard);
 	}

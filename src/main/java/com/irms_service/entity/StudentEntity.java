@@ -1,6 +1,9 @@
 package com.irms_service.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,6 +14,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+import com.irms_service.util.CustomDateDeserializer;
 
 
 @Entity
@@ -40,7 +50,8 @@ public class StudentEntity {
 	private String gender;
 
 	@Column
-	private LocalDateTime dateOfBirth;
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private Date dateOfBirth;
 
 	@Column
 	private String nationality;
@@ -65,10 +76,13 @@ public class StudentEntity {
 
 	@Column(name = "admission_date")
 	@CreationTimestamp
-	private LocalDateTime addmissionDate;
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private Date addmissionDate;
 
 	@Column(name = "leaving_date")
-	private LocalDateTime leavingDate;
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	//@JsonDeserialize(using = CustomDateDeserializer.class)
+	private Date leavingDate;
 
 	@OneToMany(mappedBy = "student")
 	private List<AddressEntity> addressList;
@@ -138,11 +152,11 @@ public class StudentEntity {
 		this.gender = gender;
 	}
 
-	public LocalDateTime getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(LocalDateTime dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -202,19 +216,19 @@ public class StudentEntity {
 		this.emailId = emailId;
 	}
 
-	public LocalDateTime getAddmissionDate() {
+	public Date getAddmissionDate() {
 		return addmissionDate;
 	}
 
-	public void setAddmissionDate(LocalDateTime addmissionDate) {
+	public void setAddmissionDate(Date addmissionDate) {
 		this.addmissionDate = addmissionDate;
 	}
 
-	public LocalDateTime getLeavingDate() {
+	public Date getLeavingDate() {
 		return leavingDate;
 	}
 
-	public void setLeavingDate(LocalDateTime leavingDate) {
+	public void setLeavingDate(Date leavingDate) {
 		this.leavingDate = leavingDate;
 	}
 
