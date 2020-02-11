@@ -3,7 +3,6 @@ package com.irms_service.service;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -46,11 +45,11 @@ public class StudentService {
 		return student;
 	}
 
-	public Optional<StudentEntity> getStudentByEnrollmentId(long id) {
-		return studentRepository.findByEnrollmentId(id);
+	public StudentEntity getStudentByEnrollmentId(long id) {
+		return studentRepository.findByEnrollmentId(id).get();
 	}
 
-	public Optional<StudentEntity> newAddmission(StudentEntity student) {
+	public StudentEntity newAddmission(StudentEntity student) {
 		student.setEnrollmentId(null);
 		student.setLeavingDate(null);
 		studentRepository.save(student);
@@ -60,19 +59,22 @@ public class StudentService {
 		List<AddressEntity> addressList = student.getAddressList();
 		addressList.stream().forEach(address -> address.setStudent(student));
 		student.setEnrollmentId("201001_" + student.getId());
+		persons.stream().forEach(p -> p.setStudent(student));
 		if (persons != null) {
 			personRepository.saveAll(persons);
 		}
+		ecList.stream().forEach(e -> e.setStudent(student));
 		if (ecList != null) {
 			ecRepository.saveAll(ecList);
 		}
+		documents.stream().forEach(d -> d.setStudent(student));
 		if (documents != null) {
 			docRepository.saveAll(documents);
 		}
 		if (addressList != null) {
 			addressRepository.saveAll(addressList);
 		}
-		return studentRepository.findById(student.getId());
+		return studentRepository.findById(student.getId()).get();
 	}
 
 	public void updateStudentAddress(StudentEntity student) {

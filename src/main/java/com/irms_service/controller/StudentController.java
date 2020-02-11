@@ -1,7 +1,6 @@
 package com.irms_service.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +27,7 @@ public class StudentController {
 	}
 
 	@PostMapping(value = "")
-	public Optional<StudentEntity> newAdmission(@RequestBody StudentEntity student) {
+	public StudentEntity newAdmission(@RequestBody StudentEntity student) {
 		return service.newAddmission(student);
 	}
 
