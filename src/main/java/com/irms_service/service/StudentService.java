@@ -40,8 +40,10 @@ public class StudentService {
 	@Autowired
 	DocumentRepository docRepository;
 
-	public Optional<StudentEntity> getStudentById(long id) {
-		return studentRepository.findById(id);
+	public StudentEntity getStudentById(long id) {
+		StudentEntity student = studentRepository.findById(id).get();
+		student.setAddressList(addressRepository.getAddressByStudentId(student.getId()));
+		return student;
 	}
 
 	public Optional<StudentEntity> getStudentByEnrollmentId(long id) {
@@ -56,6 +58,7 @@ public class StudentService {
 		List<EmergencyContactEntity> ecList = student.getEmergencyContacts();
 		List<DocumentEntity> documents = student.getDocuments();
 		List<AddressEntity> addressList = student.getAddressList();
+		addressList.stream().forEach(address -> address.setStudent(student));
 		student.setEnrollmentId("201001_" + student.getId());
 		if (persons != null) {
 			personRepository.saveAll(persons);
