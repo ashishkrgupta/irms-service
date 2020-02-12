@@ -112,12 +112,12 @@ public class StudentService {
 		return studentRepository.findAllActiveStudent();
 	}
 
-	public void deleteStudent(long id) {
+	public Student deleteStudent(long id) {
 		Student student = studentRepository.findById(id).orElseGet(null);
 		if (Objects.isNull(student))
-			return;
+			return null;
 		student.setLeavingDate(new Date());
-		studentRepository.save(student);
+		return studentRepository.save(student);
 	}
 
 	public List<Student> getStudentByLastName(String lastName) {
