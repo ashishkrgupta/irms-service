@@ -90,14 +90,21 @@ public class StudentService {
 			List<Document> documents = student.getDocuments();
 			List<Address> addressList = student.getAddressList();
 			persons.stream().forEach(p -> p.setStudent(student));
+			if (persons != null) {
+				personRepository.saveAll(persons);
+			}
 			ecList.stream().forEach(e -> e.setStudent(student));
+			if (ecList != null) {
+				ecRepository.saveAll(ecList);
+			}
 			documents.stream().forEach(d -> d.setStudent(student));
+			if (documents != null) {
+				docRepository.saveAll(documents);
+			}
 			addressList.stream().forEach(address -> address.setStudent(student));
-
-			personRepository.saveAll(persons);
-			ecRepository.saveAll(ecList);
-			docRepository.saveAll(documents);
-			addressRepository.saveAll(addressList);
+			if (addressList != null) {
+				addressRepository.saveAll(addressList);
+			}
 			LOGGER.info("Student details updated with student id: " + student.getId());
 			return studentRepository.save(student);
 		}
