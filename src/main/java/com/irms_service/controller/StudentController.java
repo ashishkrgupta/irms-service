@@ -46,8 +46,8 @@ public class StudentController {
 	}
 
 	@GetMapping(value = "")
-	public List<Student> getAllStudentInfo() {
-		return service.getAllStudentInfo();
+	public ResponseEntity<CustomResponseBody> getAllStudentInfo() {
+		return new ResponseEntity<CustomResponseBody>(new CustomResponseBody(service.getAllStudentInfo()), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/firstName/{firstName}")
