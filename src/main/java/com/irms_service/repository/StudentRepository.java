@@ -17,7 +17,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>{
 	public List<Student> findByLastName(String lastName);
 	public List<Student> findByAddmissionStandard(String addmissionStandard);
 	
-	@Query(value = "select s from StudentEntity s where leavingDate is null")
+	@Query(value = "select s from Student s where leavingDate is null")
 	public List<Student> findAllActiveStudent();
 	public Optional<Student> findByEnrollmentId(long id);
 		
