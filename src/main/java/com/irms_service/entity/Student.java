@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "Student")
-public class StudentEntity {
+public class Student {
 
 	@Id
 	@GeneratedValue

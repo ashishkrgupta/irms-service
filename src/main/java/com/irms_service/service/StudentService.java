@@ -17,7 +17,7 @@ import com.irms_service.entity.Address;
 import com.irms_service.entity.Document;
 import com.irms_service.entity.EmergencyContact;
 import com.irms_service.entity.Person;
-import com.irms_service.entity.StudentEntity;
+import com.irms_service.entity.Student;
 import com.irms_service.repository.AddressRepository;
 import com.irms_service.repository.DocumentRepository;
 import com.irms_service.repository.EmergencyContactRepository;
@@ -47,16 +47,16 @@ public class StudentService {
 	@Autowired
 	DocumentRepository docRepository;
 
-	public Optional<StudentEntity> getStudentById(long id) {
+	public Optional<Student> getStudentById(long id) {
 		LOGGER.info("Finding student with Id: " + id);
 		return studentRepository.findById(id);
 	}
 
-	public StudentEntity getStudentByEnrollmentId(long id) {
+	public Student getStudentByEnrollmentId(long id) {
 		return studentRepository.findByEnrollmentId(id).get();
 	}
 
-	public StudentEntity newAddmission(StudentEntity student) {
+	public Student newAddmission(Student student) {
 		if(student.getId() == null) {
 			LOGGER.info("Creating new student");
 			student.setEnrollmentId(null);
@@ -106,37 +106,37 @@ public class StudentService {
 		}
 	}
 
-	public void updateStudentAddress(StudentEntity student) {
+	public void updateStudentAddress(Student student) {
 		studentRepository.save(student);
 	}
 
 	
-	public List<StudentEntity> getAllStudentInfo() {
+	public List<Student> getAllStudentInfo() {
 		//return studentRepository.findAll();
 		return studentRepository.findAllActiveStudent();
 	}
 
 	public void deleteStudent(long id) {
-		StudentEntity student = studentRepository.findById(id).orElseGet(null);
+		Student student = studentRepository.findById(id).orElseGet(null);
 		if (Objects.isNull(student))
 			return;
 		student.setLeavingDate(new Date());
 		studentRepository.save(student);
 	}
 
-	public List<StudentEntity> getStudentByLastName(String lastName) {
+	public List<Student> getStudentByLastName(String lastName) {
 		return studentRepository.findByLastName(lastName);
 	}
 
-	public List<StudentEntity> getStudentByFirstName(String firstName) {
+	public List<Student> getStudentByFirstName(String firstName) {
 		return studentRepository.findByFirstName(firstName);
 	}
 
-	public List<StudentEntity> getStudentByMiddleName(String middleName) {
+	public List<Student> getStudentByMiddleName(String middleName) {
 		return studentRepository.findByMiddleName(middleName);
 	}
 
-	public List<StudentEntity> getStudentsByAdmissionStandard(String admissionStandard) {
+	public List<Student> getStudentsByAdmissionStandard(String admissionStandard) {
 		return studentRepository.findByAddmissionStandard(admissionStandard);
 	}
 }

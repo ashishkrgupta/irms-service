@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.irms_service.CustomResponseBody;
-import com.irms_service.entity.StudentEntity;
+import com.irms_service.entity.Student;
 import com.irms_service.service.StudentService;
 
 @RestController
@@ -27,7 +27,7 @@ public class StudentController {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<CustomResponseBody> getStudentById(@PathVariable("id") long id) {
-		Optional<StudentEntity> studentOptional = service.getStudentById(id);
+		Optional<Student> studentOptional = service.getStudentById(id);
 		if(studentOptional.isPresent()) {
 			return new ResponseEntity<CustomResponseBody>(new CustomResponseBody(studentOptional.get()), HttpStatus.OK);
 		}
@@ -35,7 +35,7 @@ public class StudentController {
 	}
 
 	@PostMapping
-	public ResponseEntity<CustomResponseBody> newAdmission(@RequestBody StudentEntity student) {
+	public ResponseEntity<CustomResponseBody> newAdmission(@RequestBody Student student) {
 		return new ResponseEntity<CustomResponseBody>(new CustomResponseBody(service.newAddmission(student)), HttpStatus.OK);
 	}
 
@@ -45,27 +45,27 @@ public class StudentController {
 	}
 
 	@GetMapping(value = "")
-	public List<StudentEntity> getAllStudentInfo() {
+	public List<Student> getAllStudentInfo() {
 		return service.getAllStudentInfo();
 	}
 
 	@GetMapping(value = "/firstName/{firstName}")
-	public List<StudentEntity> getStudentByFirstName(@PathVariable("firstName") String firstName) {
+	public List<Student> getStudentByFirstName(@PathVariable("firstName") String firstName) {
 		return service.getStudentByFirstName(firstName);
 	}
 
 	@GetMapping(value = "/middleName/{middleName}")
-	public List<StudentEntity> getStudentByMiddleName(@PathVariable("middleName") String middleName) {
+	public List<Student> getStudentByMiddleName(@PathVariable("middleName") String middleName) {
 		return service.getStudentByMiddleName(middleName);
 	}
 
 	@GetMapping(value = "/lastName/{lastName}")
-	public List<StudentEntity> getStudentByLastName(@PathVariable("lastName") String lastName) {
+	public List<Student> getStudentByLastName(@PathVariable("lastName") String lastName) {
 		return service.getStudentByLastName(lastName);
 	}
 
 	@GetMapping(value = "/standard/{standard}")
-	public List<StudentEntity> getStudentsByAdmissionStandard(@PathVariable("standard") String standard) {
+	public List<Student> getStudentsByAdmissionStandard(@PathVariable("standard") String standard) {
 		return service.getStudentsByAdmissionStandard(standard);
 	}
 	

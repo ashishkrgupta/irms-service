@@ -18,7 +18,7 @@ public class BookStatus {
 	private Book book;
 	
 	@OneToOne
-	private StudentEntity student;
+	private Student student;
 
 	@Column
 	private boolean isIssued;
@@ -47,11 +47,11 @@ public class BookStatus {
 		this.isIssued = isIssued;
 	}
 
-	public StudentEntity getStudent() {
+	public Student getStudent() {
 		return student;
 	}
 
-	public void setStudent(StudentEntity student) {
+	public void setStudent(Student student) {
 		this.student = student;
 	}
 

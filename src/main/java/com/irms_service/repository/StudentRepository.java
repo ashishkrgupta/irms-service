@@ -7,19 +7,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.irms_service.entity.StudentEntity;
+import com.irms_service.entity.Student;
 
 @Repository
-public interface StudentRepository extends JpaRepository<StudentEntity, Long>{
+public interface StudentRepository extends JpaRepository<Student, Long>{
 
-	public List<StudentEntity> findByFirstName(String firstName);
-	public List<StudentEntity> findByMiddleName(String middleName);
-	public List<StudentEntity> findByLastName(String lastName);
-	public List<StudentEntity> findByAddmissionStandard(String addmissionStandard);
+	public List<Student> findByFirstName(String firstName);
+	public List<Student> findByMiddleName(String middleName);
+	public List<Student> findByLastName(String lastName);
+	public List<Student> findByAddmissionStandard(String addmissionStandard);
 	
 	@Query(value = "select s from StudentEntity s where leavingDate is null")
-	public List<StudentEntity> findAllActiveStudent();
-	public Optional<StudentEntity> findByEnrollmentId(long id);
+	public List<Student> findAllActiveStudent();
+	public Optional<Student> findByEnrollmentId(long id);
 		
 	
 }
