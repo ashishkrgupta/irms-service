@@ -108,31 +108,37 @@ public class StudentService {
 	}
 
 	public List<Student> getAllStudentInfo() {
-		// return studentRepository.findAll();
+		LOGGER.info("Fetching details of all active students");
 		return studentRepository.findAllActiveStudent();
 	}
 
 	public Student deleteStudent(long id) {
+		LOGGER.info("Marking school leaving date for student id: " + id);
 		Student student = studentRepository.findById(id).orElseGet(null);
 		if (Objects.isNull(student))
 			return null;
 		student.setLeavingDate(new Date());
+		LOGGER.info("School leaving date marked for student id: " + id);
 		return studentRepository.save(student);
 	}
 
 	public List<Student> getStudentByLastName(String lastName) {
+		LOGGER.info("Finding students with last name: " + lastName);
 		return studentRepository.findByLastName(lastName);
 	}
 
 	public List<Student> getStudentByFirstName(String firstName) {
+		LOGGER.info("Finding students with first name: " + firstName);
 		return studentRepository.findByFirstName(firstName);
 	}
 
 	public List<Student> getStudentByMiddleName(String middleName) {
+		LOGGER.info("Finding students with middle name: " + middleName);
 		return studentRepository.findByMiddleName(middleName);
 	}
 
 	public List<Student> getStudentsByAdmissionStandard(String admissionStandard) {
+		LOGGER.info("Finding students who are studying in standard: " + admissionStandard);
 		return studentRepository.findByAddmissionStandard(admissionStandard);
 	}
 }
