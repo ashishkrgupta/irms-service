@@ -51,23 +51,23 @@ public class StudentController {
 	}
 
 	@GetMapping(value = "/firstName/{firstName}")
-	public List<Student> getStudentByFirstName(@PathVariable("firstName") String firstName) {
-		return service.getStudentByFirstName(firstName);
+	public ResponseEntity<CustomResponseBody> getStudentByFirstName(@PathVariable("firstName") String firstName) {
+		return new ResponseEntity<CustomResponseBody>(new CustomResponseBody(service.getStudentByFirstName(firstName)), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/middleName/{middleName}")
-	public List<Student> getStudentByMiddleName(@PathVariable("middleName") String middleName) {
-		return service.getStudentByMiddleName(middleName);
+	public ResponseEntity<CustomResponseBody> getStudentByMiddleName(@PathVariable("middleName") String middleName) {
+		return new ResponseEntity<CustomResponseBody>(new CustomResponseBody(service.getStudentByMiddleName(middleName)), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/lastName/{lastName}")
-	public List<Student> getStudentByLastName(@PathVariable("lastName") String lastName) {
-		return service.getStudentByLastName(lastName);
+	public ResponseEntity<CustomResponseBody> getStudentByLastName(@PathVariable("lastName") String lastName) {
+		return new ResponseEntity<CustomResponseBody>(new CustomResponseBody(service.getStudentByLastName(lastName)), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/standard/{standard}")
-	public List<Student> getStudentsByAdmissionStandard(@PathVariable("standard") String standard) {
-		return service.getStudentsByAdmissionStandard(standard);
+	public ResponseEntity<CustomResponseBody> getStudentsByAdmissionStandard(@PathVariable("standard") String standard) {
+		return new ResponseEntity<CustomResponseBody>(new CustomResponseBody(service.getStudentsByAdmissionStandard(standard)), HttpStatus.OK);
 	}
 	
 	
