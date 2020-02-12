@@ -11,11 +11,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "document")
-public class DocumentEntity {
+public class Document {
 
 	@Id
 	@GeneratedValue
-	@JsonIgnore
 	private long id;
 
 	@ManyToOne

@@ -11,11 +11,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Person")
-public class PersonEntity {
+public class Person {
 
 	@Id
 	@GeneratedValue
-	@JsonIgnore
 	@Column(name = "person_id")
 	private long personId;
 

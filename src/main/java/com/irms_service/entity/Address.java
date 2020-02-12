@@ -11,11 +11,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Address")
-public class AddressEntity {
+public class Address {
 
 	@Id
 	@GeneratedValue
-	@JsonIgnore
 	private long id;
 
 	@ManyToOne
@@ -27,19 +26,19 @@ public class AddressEntity {
 
 	@Column
 	private String line1;
-	
+
 	@Column
 	private String line2;
 
 	@Column
 	private String city;
-	
+
 	@Column
 	private String state;
-	
+
 	@Column
 	private String country;
-	
+
 	@Column
 	private String pin;
 
@@ -121,7 +120,5 @@ public class AddressEntity {
 				+ ", line2=" + line2 + ", city=" + city + ", state=" + state + ", country=" + country + ", pin=" + pin
 				+ "]";
 	}
-	
-	
 
 }

@@ -3,10 +3,10 @@ package com.irms_service.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.irms_service.entity.PersonEntity;
+import com.irms_service.entity.Person;
 
 @Repository
-public interface PersonRepository extends JpaRepository<PersonEntity, Long>{
+public interface PersonRepository extends JpaRepository<Person, Long>{
 
 	
 }

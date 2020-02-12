@@ -14,14 +14,13 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-
 @Entity
 @Table(name = "Student")
 public class StudentEntity {
 
 	@Id
 	@GeneratedValue
-	private long id;
+	private Long id;
 
 	@Column
 	private String enrollmentId;
@@ -73,26 +72,25 @@ public class StudentEntity {
 
 	@Column(name = "leaving_date")
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	//@JsonDeserialize(using = CustomDateDeserializer.class)
 	private Date leavingDate;
 
 	@OneToMany(mappedBy = "student")
-	private List<AddressEntity> addressList;
+	private List<Address> addressList;
 
 	@OneToMany(mappedBy = "student")
-	private List<PersonEntity> relatives;
+	private List<Person> relatives;
 
 	@OneToMany(mappedBy = "student")
-	private List<DocumentEntity> documents;
+	private List<Document> documents;
 
 	@OneToMany(mappedBy = "student")
-	private List<EmergencyContactEntity> emergencyContacts;
+	private List<EmergencyContact> emergencyContacts;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -224,35 +222,35 @@ public class StudentEntity {
 		this.leavingDate = leavingDate;
 	}
 
-	public List<AddressEntity> getAddressList() {
+	public List<Address> getAddressList() {
 		return addressList;
 	}
 
-	public void setAddressList(List<AddressEntity> addressList) {
+	public void setAddressList(List<Address> addressList) {
 		this.addressList = addressList;
 	}
 
-	public List<PersonEntity> getRelatives() {
+	public List<Person> getRelatives() {
 		return relatives;
 	}
 
-	public void setRelatives(List<PersonEntity> relatives) {
+	public void setRelatives(List<Person> relatives) {
 		this.relatives = relatives;
 	}
 
-	public List<DocumentEntity> getDocuments() {
+	public List<Document> getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(List<DocumentEntity> documents) {
+	public void setDocuments(List<Document> documents) {
 		this.documents = documents;
 	}
 
-	public List<EmergencyContactEntity> getEmergencyContacts() {
+	public List<EmergencyContact> getEmergencyContacts() {
 		return emergencyContacts;
 	}
 
-	public void setEmergencyContacts(List<EmergencyContactEntity> emergencyContacts) {
+	public void setEmergencyContacts(List<EmergencyContact> emergencyContacts) {
 		this.emergencyContacts = emergencyContacts;
 	}
 
@@ -266,7 +264,5 @@ public class StudentEntity {
 				+ addmissionDate + ", leavingDate=" + leavingDate + ", addressList=" + addressList + ", relatives="
 				+ relatives + ", documents=" + documents + ", emergencyContacts=" + emergencyContacts + "]";
 	}
-	
-	
 
 }

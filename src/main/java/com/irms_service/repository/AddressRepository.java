@@ -6,13 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.irms_service.entity.AddressEntity;
+import com.irms_service.entity.Address;
 
 @Repository
-public interface AddressRepository extends JpaRepository<AddressEntity, Long>{
+public interface AddressRepository extends JpaRepository<Address, Long>{
 	
-	@Query(value = "select * from Address where student.id = ?1", nativeQuery = true)
-	public List<AddressEntity> getAddressByStudentId(long id);
+	@Query(value = "select a from AddressEntity a where student.id = ?1")
+	public List<Address> getAddressByStudentId(long id);
 
 	
 }

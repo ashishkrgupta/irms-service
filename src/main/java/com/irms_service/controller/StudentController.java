@@ -1,8 +1,11 @@
 package com.irms_service.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.irms_service.CustomResponseBody;
 import com.irms_service.entity.StudentEntity;
 import com.irms_service.service.StudentService;
 
@@ -22,13 +26,17 @@ public class StudentController {
 	StudentService service;
 
 	@GetMapping(value = "/{id}")
-	public StudentEntity getStudentById(@PathVariable("id") long id) {
-		return service.getStudentById(id);
+	public ResponseEntity<CustomResponseBody> getStudentById(@PathVariable("id") long id) {
+		Optional<StudentEntity> studentOptional = service.getStudentById(id);
+		if(studentOptional.isPresent()) {
+			return new ResponseEntity<CustomResponseBody>(new CustomResponseBody(studentOptional.get()), HttpStatus.OK);
+		}
+		return new ResponseEntity<CustomResponseBody>(new CustomResponseBody(null, "Can not find Student with Id :" + id), HttpStatus.BAD_REQUEST);
 	}
 
-	@PostMapping(value = "")
-	public StudentEntity newAdmission(@RequestBody StudentEntity student) {
-		return service.newAddmission(student);
+	@PostMapping
+	public ResponseEntity<CustomResponseBody> newAdmission(@RequestBody StudentEntity student) {
+		return new ResponseEntity<CustomResponseBody>(new CustomResponseBody(service.newAddmission(student)), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
