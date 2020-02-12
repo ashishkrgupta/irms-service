@@ -11,7 +11,7 @@ import com.irms_service.entity.Address;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long>{
 	
-	@Query(value = "select a from AddressEntity a where student.id = ?1")
+	@Query(value = "select a from Address a where student.id = ?1")
 	public List<Address> getAddressByStudentId(long id);
 
 	
