@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.annotations.Where;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +26,8 @@ import com.irms_service.repository.StudentRepository;
 @Service
 @Transactional
 public class StudentService {
-	
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(StudentService.class);
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(StudentService.class);
 
 	@Autowired
 	StudentRepository studentRepository;
@@ -56,9 +53,9 @@ public class StudentService {
 		return studentRepository.findByEnrollmentId(id).get();
 	}
 
-	public Student newAddmission(Student student) {
-		if(student.getId() == null) {
-			LOGGER.info("Creating new student");
+	public Student newAddmissionOrEditStudent(Student student) {
+		if (student.getId() == null) {
+			LOGGER.info("New addmission");
 			student.setEnrollmentId(null);
 			student.setLeavingDate(null);
 			List<Person> persons = student.getRelatives();
@@ -66,7 +63,7 @@ public class StudentService {
 			List<Document> documents = student.getDocuments();
 			List<Address> addressList = student.getAddressList();
 			studentRepository.save(student);
-	
+
 			student.setEnrollmentId("201001_" + student.getId());
 			persons.stream().forEach(p -> p.setStudent(student));
 			if (persons != null) {
@@ -84,10 +81,10 @@ public class StudentService {
 			if (addressList != null) {
 				addressRepository.saveAll(addressList);
 			}
-			LOGGER.info("Created new student with Id: "+ student.getId());
+			LOGGER.info("New addmission succeed with student Id: " + student.getId());
 			return studentRepository.findById(student.getId()).get();
-		}else {
-			LOGGER.info("Updatin student details with Id: "+ student.getId());
+		} else {
+			LOGGER.info("Updating student details with Id: " + student.getId());
 			List<Person> persons = student.getRelatives();
 			List<EmergencyContact> ecList = student.getEmergencyContacts();
 			List<Document> documents = student.getDocuments();
@@ -97,11 +94,11 @@ public class StudentService {
 			documents.stream().forEach(d -> d.setStudent(student));
 			addressList.stream().forEach(address -> address.setStudent(student));
 
-			
 			personRepository.saveAll(persons);
 			ecRepository.saveAll(ecList);
 			docRepository.saveAll(documents);
 			addressRepository.saveAll(addressList);
+			LOGGER.info("Student details updated with student id: " + student.getId());
 			return studentRepository.save(student);
 		}
 	}
@@ -110,9 +107,8 @@ public class StudentService {
 		studentRepository.save(student);
 	}
 
-	
 	public List<Student> getAllStudentInfo() {
-		//return studentRepository.findAll();
+		// return studentRepository.findAll();
 		return studentRepository.findAllActiveStudent();
 	}
 
