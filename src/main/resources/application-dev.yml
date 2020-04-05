@@ -1,0 +1,31 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    jpa.properties.hibernate.format_sql: true
+
+#Enable spring data repos 
+  data.jpa.repositories.enabled: true
+  datasource:
+    url: jdbc:postgresql://ec2-107-22-216-151.compute-1.amazonaws.com:5432/dacdosci3sl8a6
+    driverClassName: org.postgresql.Driver
+    username: cuguyfpuqdmsvy
+    password: f4471a44012295ecd7aafecb7c9e2587c96ac3776864ec2502bbc565e8f7eb6b
+    hikari:
+      minimumIdle: 2
+      maximum-pool-size: 3
+
+
+server:
+  servlet:
+    context-path: /irms-service
+
+logging:
+  file: /logs/application.log
+  level:
+    org.springframework: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
