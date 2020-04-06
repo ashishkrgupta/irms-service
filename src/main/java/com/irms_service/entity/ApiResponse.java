@@ -8,8 +8,6 @@ public class ApiResponse {
 
 	String statusMessage;
 	
-	public ApiResponse() {}
-	
 	public ApiResponse(Object body) {
 		this.body = body;
 		this.statusMessage = Constants.VALUE_SUCCESS;

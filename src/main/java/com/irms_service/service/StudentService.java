@@ -53,7 +53,7 @@ public class StudentService {
 		return studentRepository.findByEnrollmentId(id).get();
 	}
 
-	public Student newAddmissionOrEditStudent(Student student) {
+	public Student createEditStudent(Student student) {
 		if (student.getId() == null) {
 			LOGGER.info("New addmission");
 			student.setEnrollmentId(null);
