@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
 @Entity
 @Table(name = "Student")
@@ -40,8 +41,8 @@ public class Student {
 	@Column
 	private String gender;
 
-	@Column
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Column//2020-04-05T17:24:48.253Z
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
 	private Date dateOfBirth;
 
 	@Column
@@ -67,11 +68,9 @@ public class Student {
 
 	@Column(name = "admission_date")
 	@CreationTimestamp
-	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date addmissionDate;
 
 	@Column(name = "leaving_date")
-	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date leavingDate;
 
 	@OneToMany(mappedBy = "student")
