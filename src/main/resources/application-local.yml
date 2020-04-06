@@ -4,22 +4,19 @@ spring:
     hibernate.ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL8Dialect
     jpa.properties.hibernate.format_sql: true
-
 #Enable spring data repos 
   data.jpa.repositories.enabled: true
   datasource:
-    url: mysql://localhost:3036/irms-service
-    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/irms_service
+    driverClassName: com.mysql.jdbc.Driver
     username: root
-    password: Ashu@007
+    password: 
     hikari:
       minimumIdle: 2
       maximum-pool-size: 3
-
-
-server:
-  servlet:
-    context-path: /irms-service
+      
+irms-service:
+  upload-location: /Users/ashu/Documents/uploaded/
 
 logging:
   file: /logs/application.log
