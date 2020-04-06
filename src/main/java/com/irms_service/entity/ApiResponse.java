@@ -1,36 +1,40 @@
-package com.irms_service;
+package com.irms_service.entity;
 
-public class CustomResponseBody {
+import com.irms_service.Constants;
 
-	Object response;
+public class ApiResponse {
 
-	String errorMessage;
+	Object body;
+
+	String statusMessage;
 	
-	public CustomResponseBody(Object response) {
-		super();
-		this.response = response;
+	public ApiResponse() {}
+	
+	public ApiResponse(Object body) {
+		this.body = body;
+		this.statusMessage = Constants.VALUE_SUCCESS;
 	}
 	
-	public CustomResponseBody(Object response, String errorMessage) {
-		super();
-		this.response = response;
-		this.errorMessage = errorMessage;
+	public ApiResponse(Object body, String msg) {
+		this.body = body;
+		this.statusMessage = msg;
 	}
 
-	public Object getResponse() {
-		return response;
+	public Object getBody() {
+		return body;
 	}
 
-	public void setResponse(Object response) {
-		this.response = response;
+	public void setBody(Object body) {
+		this.body = body;
 	}
 
-	public String getErrorMessage() {
-		return errorMessage;
+	public String getStatusMessage() {
+		return statusMessage;
 	}
 
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
 	}
+	
 
 }
