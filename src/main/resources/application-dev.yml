@@ -17,7 +17,7 @@ spring:
       maximum-pool-size: 3
       
 irms-service:
-  upload-location: /uploaded/
+  upload-location: /app/uploaded/
   
 logging:
   file: /logs/application.log
