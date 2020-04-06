@@ -15,12 +15,10 @@ spring:
     hikari:
       minimumIdle: 2
       maximum-pool-size: 3
-
-
-server:
-  servlet:
-    context-path: /irms-service
-
+      
+irms-service:
+  upload-location: /uploaded/
+  
 logging:
   file: /logs/application.log
   level:
