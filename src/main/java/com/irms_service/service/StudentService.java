@@ -1,5 +1,9 @@
 package com.irms_service.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -10,7 +14,9 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.irms_service.entity.Address;
 import com.irms_service.entity.Document;
@@ -29,6 +35,12 @@ public class StudentService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(StudentService.class);
 
+	@Value("${irmsService.uploadToDB}")
+	private boolean uploadToDb;
+	
+	@Value("${irmsService.uploadLocation}")
+	private String uploadLoc;
+	
 	@Autowired
 	StudentRepository studentRepository;
 
@@ -53,61 +65,116 @@ public class StudentService {
 		return studentRepository.findByEnrollmentId(id).get();
 	}
 
-	public Student createEditStudent(Student student) {
-		if (student.getId() == null) {
-			LOGGER.info("New addmission");
-			student.setEnrollmentId(null);
-			student.setLeavingDate(null);
-			List<Person> persons = student.getRelatives();
-			List<EmergencyContact> ecList = student.getEmergencyContacts();
-			List<Document> documents = student.getDocuments();
-			List<Address> addressList = student.getAddressList();
-			studentRepository.save(student);
-
-			student.setEnrollmentId("201001_" + student.getId());
+	public Student createEditStudent(Student student, MultipartFile[] files) throws IOException {
+		
+		List<Person> persons = student.getRelatives();
+		List<EmergencyContact> ecList = student.getEmergencyContacts();
+		List<Document> documents = student.getDocuments();
+		List<Address> addressList = student.getAddressList();
+		studentRepository.save(student);
+		student.setEnrollmentId("201001_" + student.getId());
+		if (persons != null) {
 			persons.stream().forEach(p -> p.setStudent(student));
-			if (persons != null) {
-				personRepository.saveAll(persons);
-			}
-			ecList.stream().forEach(e -> e.setStudent(student));
-			if (ecList != null) {
-				ecRepository.saveAll(ecList);
-			}
-			documents.stream().forEach(d -> d.setStudent(student));
-			if (documents != null) {
-				docRepository.saveAll(documents);
-			}
-			addressList.stream().forEach(address -> address.setStudent(student));
-			if (addressList != null) {
-				addressRepository.saveAll(addressList);
-			}
-			LOGGER.info("New addmission succeed with student Id: " + student.getId());
-			return studentRepository.findById(student.getId()).get();
-		} else {
-			LOGGER.info("Updating student details with Id: " + student.getId());
-			List<Person> persons = student.getRelatives();
-			List<EmergencyContact> ecList = student.getEmergencyContacts();
-			List<Document> documents = student.getDocuments();
-			List<Address> addressList = student.getAddressList();
-			persons.stream().forEach(p -> p.setStudent(student));
-			if (persons != null) {
-				personRepository.saveAll(persons);
-			}
-			ecList.stream().forEach(e -> e.setStudent(student));
-			if (ecList != null) {
-				ecRepository.saveAll(ecList);
-			}
-			documents.stream().forEach(d -> d.setStudent(student));
-			if (documents != null) {
-				docRepository.saveAll(documents);
-			}
-			addressList.stream().forEach(address -> address.setStudent(student));
-			if (addressList != null) {
-				addressRepository.saveAll(addressList);
-			}
-			LOGGER.info("Student details updated with student id: " + student.getId());
-			return studentRepository.save(student);
+			personRepository.saveAll(persons);
 		}
+		if (ecList != null) {
+			ecList.stream().forEach(e -> e.setStudent(student));
+			ecRepository.saveAll(ecList);
+		}
+		if (documents != null) {
+			for ( Document d : documents) {
+				d.setStudent(student);
+				if (uploadToDb) {
+					d.setFileData(getFileData(files, d.getFileName()));
+				} else {
+					d.setFilePath(getFilePath(files, d.getFileName()));
+				}
+			}
+			docRepository.saveAll(documents);
+		}
+		if (addressList != null) {
+			addressList.stream().forEach(address -> address.setStudent(student));
+			addressRepository.saveAll(addressList);
+		}
+		LOGGER.info("New addmission succeed with student Id: " + student.getId());
+		return student;
+		
+		
+		
+//		if (student.getId() == null) {
+//			LOGGER.info("New addmission");
+//			student.setEnrollmentId(null);
+//			student.setLeavingDate(null);
+//			List<Person> persons = student.getRelatives();
+//			List<EmergencyContact> ecList = student.getEmergencyContacts();
+//			List<Document> documents = student.getDocuments();
+//			List<Address> addressList = student.getAddressList();
+//			studentRepository.save(student);
+//
+//			student.setEnrollmentId("201001_" + student.getId());
+//			persons.stream().forEach(p -> p.setStudent(student));
+//			if (persons != null) {
+//				personRepository.saveAll(persons);
+//			}
+//			ecList.stream().forEach(e -> e.setStudent(student));
+//			if (ecList != null) {
+//				ecRepository.saveAll(ecList);
+//			}
+//			documents.stream().forEach(d -> d.setStudent(student));
+//			if (documents != null) {
+//				docRepository.saveAll(documents);
+//			}
+//			addressList.stream().forEach(address -> address.setStudent(student));
+//			if (addressList != null) {
+//				addressRepository.saveAll(addressList);
+//			}
+//			LOGGER.info("New addmission succeed with student Id: " + student.getId());
+//			return studentRepository.findById(student.getId()).get();
+//		} else {
+//			LOGGER.info("Updating student details with Id: " + student.getId());
+//			List<Person> persons = student.getRelatives();
+//			List<EmergencyContact> ecList = student.getEmergencyContacts();
+//			List<Document> documents = student.getDocuments();
+//			List<Address> addressList = student.getAddressList();
+//			persons.stream().forEach(p -> p.setStudent(student));
+//			if (persons != null) {
+//				personRepository.saveAll(persons);
+//			}
+//			ecList.stream().forEach(e -> e.setStudent(student));
+//			if (ecList != null) {
+//				ecRepository.saveAll(ecList);
+//			}
+//			documents.stream().forEach(d -> d.setStudent(student));
+//			if (documents != null) {
+//				docRepository.saveAll(documents);
+//			}
+//			addressList.stream().forEach(address -> address.setStudent(student));
+//			if (addressList != null) {
+//				addressRepository.saveAll(addressList);
+//			}
+//			LOGGER.info("Student details updated with student id: " + student.getId());
+//			return studentRepository.save(student);
+//		}
+	}
+	
+	private String getFilePath(MultipartFile[] files, String fileName) throws IOException {
+		for (MultipartFile file : files) {
+			if (file.getOriginalFilename().equals(fileName)) {
+				Path path = Paths.get(uploadLoc + file.getOriginalFilename());
+		        Files.write(path, file.getBytes());
+				return path.toString();
+			}
+		}
+		return null;
+	}
+
+	private byte[] getFileData(MultipartFile[] files, String fileName) throws IOException {
+		for (MultipartFile file : files) {
+			if (file.getOriginalFilename().equals(fileName)) {
+				return file.getBytes();
+			}
+		}
+		return null;
 	}
 
 	public void updateStudentAddress(Student student) {

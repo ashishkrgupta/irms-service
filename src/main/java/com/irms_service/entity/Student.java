@@ -84,7 +84,7 @@ public class Student {
 
 	@OneToMany(mappedBy = "student")
 	private List<EmergencyContact> emergencyContacts;
-
+	
 	public Long getId() {
 		return id;
 	}

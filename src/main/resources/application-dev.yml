@@ -15,9 +15,12 @@ spring:
     hikari:
       minimumIdle: 2
       maximum-pool-size: 3
+  http:
+    log-request-details: true  
       
-irms-service:
-  upload-location: /app/uploaded/
+irmsService:
+  uploadToDB: true
+  uploadLocation: /app/uploaded/
   
 logging:
   file: /logs/application.log

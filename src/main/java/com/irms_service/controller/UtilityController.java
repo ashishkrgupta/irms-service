@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,11 +17,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.irms_service.entity.DBFile;
 import com.irms_service.entity.MiscConfig;
+import com.irms_service.service.FileService;
 import com.irms_service.service.MiscConfigService;
 
 @RestController
@@ -30,8 +34,9 @@ public class UtilityController {
 	@Autowired
 	MiscConfigService miscConfigService;
 	
-	@Value("${irms-service.upload-location}")
-	private String uploadLoc;
+	@Autowired
+	private FileService fileService;
+	
 	
 	@GetMapping
 	public List<MiscConfig> getConfigurations() {
@@ -49,23 +54,16 @@ public class UtilityController {
 	}
 	
 	@PostMapping(value = "/upload", consumes = "multipart/form-data")
-	public ResponseEntity<Map<String, String>> uploadFile(@RequestPart("file") MultipartFile file,
-			@RequestPart("meta") String meta) {
-		System.out.println(meta);
-		//for (MultipartFile file : files) {
+	public List<DBFile> uploadFile(@RequestParam("file") MultipartFile[] files) throws IOException {
+		List<DBFile> savedFiles = new ArrayList<>();
+		for (MultipartFile file : files) {
 			try {
-	            // Get the file and save it somewhere
-	            byte[] bytes = file.getBytes();
-	            Path path = Paths.get(uploadLoc + file.getOriginalFilename());
-	            
-	            Files.write(path, bytes);
-
-
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-		//}
-		
-		return null;
+				savedFiles.add(fileService.saveFile(file));
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return savedFiles;
 	}
 }
